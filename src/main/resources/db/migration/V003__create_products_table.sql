@@ -1,0 +1,12 @@
+CREATE TABLE products (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    name_ar VARCHAR(255) NOT NULL,
+    name_en VARCHAR(255) NOT NULL,
+    description_ar TEXT,
+    description_en TEXT,
+    price DECIMAL(10,2) NOT NULL,
+    is_active TINYINT(1) DEFAULT 1,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id)
+);
