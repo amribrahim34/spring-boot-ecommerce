@@ -13,7 +13,7 @@ import java.util.Date;
 public class OrderItem {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
     public Long order_id;
     public Long product_id;

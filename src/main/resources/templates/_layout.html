@@ -35,10 +35,12 @@
 <div class="flex flex-1">
     <!-- Sidebar -->
     <aside class="w-64 bg-gray-900 p-6 text-gray-200">
-        <h2 class="text-xl font-bold mb-6 border-b border-gray-700 pb-2">Sidebar</h2>
         <ul class="space-y-3">
-            <li><a href="#" class="block text-lg px-3 py-2 rounded hover:bg-gray-700 hover:text-white transition">Dashboard</a></li>
+            <li><a th:href="@{/admin}" class="block text-lg px-3 py-2 rounded hover:bg-gray-700 hover:text-white transition">Dashboard</a></li>
             <li><a th:href="@{/admin/products}" class="block text-lg px-3 py-2 rounded hover:bg-gray-700 hover:text-white transition">products</a></li>
+            <li>
+                <a th:href="@{/admin/categories}" class="block text-lg px-3 py-2 rounded hover:bg-gray-700 hover:text-white transition">categories</a>
+            </li>
             <li><a href="#" class="block text-lg px-3 py-2 rounded hover:bg-gray-700 hover:text-white transition">Settings</a></li>
             <li><a href="#" class="block text-lg px-3 py-2 rounded hover:bg-gray-700 hover:text-white transition">Logout</a></li>
         </ul>

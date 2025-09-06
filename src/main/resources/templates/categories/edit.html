@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><title>Edit Category</title></head>
+<body>
+<div th:replace="~{_layout :: layout(~{::title}, ~{::content}, ~{::scripts})}">
+    <title>Edit Category</title>
+
+    <th:block th:fragment="content">
+        <h1 class="text-3xl font-bold mb-8">Dashboard</h1>
+        <div class="bg-white p-6 rounded-lg shadow">
+            <div class="flex justify-between">
+                <h2 class="text-xl font-bold mb-4">Categories</h2>
+            </div>
+
+            <form th:action="@{/admin/categories/{id}/update(id=${category.id})}" method="post" th:object="${category}" enctype='multipart/form-data'>
+                <input type="hidden" name="_method" value="put"/>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <input type="hidden" th:name="id" th:field="*{id}"/>
+
+                <div class="grid grid-cols-4 gap-4 my-1">
+                    <label class="text-gray-700 text-sm font-bold col-span-1 grid mr-2 text-center align-middle" for="name_ar">name ar</label>
+                    <input type="text" th:field="*{name_ar}" name="name_ar" id="name_ar" class="shadow appearance-none border rounded w-full py-2 col-span-3 grid px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
+                </div>
+
+                <div class="grid grid-cols-4 gap-4 my-1">
+                    <label class="text-gray-700 text-sm font-bold mr-2 text-center col-span-1 grid inline-block align-middle" for="name_en">name en</label>
+                    <input type="text" th:field="*{name_en}" name="name_en" id="name_en" class="shadow appearance-none border rounded l py-2 col-span-3 grid px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
+                </div>
+                <!-- Current image preview (only if exists) -->
+                <div class="grid grid-cols-4 gap-4 my-1" th:if="${category.image_url}">
+                    <label class="text-gray-700 text-sm font-bold mr-2 text-center col-span-1 grid inline-block align-middle">current image</label>
+                    <div class="col-span-3">
+                        <img th:src="${category.image_url}" alt="current image" class="h-16 w-16 object-cover rounded"/>
+                    </div>
+                </div>
+                <div class="grid grid-cols-4 gap-4 my-1">
+                    <label class="text-gray-700 text-sm font-bold mr-2 text-center col-span-1 grid inline-block align-middle"    >image </label>
+                    <input type="file" name="image" accept="image/*"
+                           class="shadow appearance-none border rounded l py-2 col-span-3 grid px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="grid grid-cols-4 gap-4 my-1">
+                    <label class="text-gray-700 text-sm font-bold mr-2 text-center col-span-1 grid inline-block align-middle"   >parent category</label>
+                    <select th:field="*{category_id}"
+                            class="shadow appearance-none border rounded l py-2 col-span-3 grid px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <option selected value="">null</option>
+                        <option th:each="cat : ${categories}"
+                                th:value="${cat.id}"
+                                th:text="${#strings.defaultString(cat.name_en, cat.name_ar)}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="flex justify-end space-x-3 pt-2">
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-5 rounded-lg shadow-sm transition">update</button>
+                </div>
+            </form>
+        </div>
+    </th:block>
+
+    <th:block th:fragment="scripts">
+        <!-- no page-specific JS for edit page -->
+    </th:block>
+</div>
+</body>
+</html>

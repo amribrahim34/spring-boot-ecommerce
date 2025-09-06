@@ -11,7 +11,7 @@ import java.util.Date;
 @Table(name="categories")
 public class Category {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String name_ar;
     String name_en;
@@ -28,9 +28,14 @@ public class Category {
         this.image_url = image_url;
         this.category_id = category_id;
     }
+    public Category(){}
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName_ar() {

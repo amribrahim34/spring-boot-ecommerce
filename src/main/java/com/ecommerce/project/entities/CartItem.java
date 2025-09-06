@@ -12,7 +12,7 @@ import java.util.Date;
 public class CartItem {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
     public Long cart_id;
     public Long product_id;
