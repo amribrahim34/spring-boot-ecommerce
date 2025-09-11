@@ -40,7 +40,7 @@
                 </div>
                 <div class="grid grid-cols-4 gap-4 my-1">
                     <label class="text-gray-700 text-sm font-bold mr-2 text-center col-span-1 grid inline-block align-middle"   >parent category</label>
-                    <select th:field="*{category_id}"
+                    <select th:field="*{parent}"
                             class="shadow appearance-none border rounded l py-2 col-span-3 grid px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                         <option selected value="">null</option>
                         <option th:each="cat : ${categories}"

@@ -3,11 +3,15 @@ package com.ecommerce.project.entities;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SoftDelete;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+//@SoftDelete
 @Table(name="categories")
 public class Category {
     @Id
@@ -16,17 +20,23 @@ public class Category {
     String name_ar;
     String name_en;
     String image_url;
-    Long category_id;
+//    Long category_id;
     @CreationTimestamp
-    public Date created_at;
+    public LocalDateTime created_at;
     @UpdateTimestamp
-    public Date updated_at;
+    public LocalDateTime updated_at;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category parent;
+    @OneToMany(mappedBy = "parent")
+    private List<Category> children ;
+//    = new ArrayList<>()
 
-    public Category(String name_ar, String name_en, String image_url, Long category_id) {
+    public Category(String name_ar, String name_en, String image_url,  Category parent) {
         this.name_ar = name_ar;
         this.name_en = name_en;
         this.image_url = image_url;
-        this.category_id = category_id;
+        this.parent = parent;
     }
     public Category(){}
 
@@ -62,11 +72,18 @@ public class Category {
         this.image_url = image_url;
     }
 
-    public Long getCategory_id() {
-        return category_id;
+    public void addChild(Category child) {
+        children.add(child);
+        child.setParent(this);
     }
 
-    public void setCategory_id(Long category_id) {
-        this.category_id = category_id;
+    public void removeChild(Category child) {
+        children.remove(child);
+        child.setParent(null);
     }
+
+    public Category getParent() { return parent; }
+    public void setParent(Category parent) { this.parent = parent; }
+    public List<Category> getChildren() { return children; }
+    public void setChildren(List<Category> children) { this.children = children; }
 }
