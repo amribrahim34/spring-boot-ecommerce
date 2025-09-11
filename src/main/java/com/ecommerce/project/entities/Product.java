@@ -25,14 +25,18 @@ public class Product {
     public Date created_at;
     @UpdateTimestamp
     public Date updated_at;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    public Category category;
 
-    public Product(Long id ,String name_ar, String name_en, String description_ar, String description_en, BigDecimal price, boolean is_active, Date created_at, Date updated_at) {
+    public Product(Long id ,String name_ar, String name_en, String description_ar, String description_en, BigDecimal price, boolean is_active, Date created_at, Date updated_at , Category category) {
         this.id = id;
         this.name_ar = name_ar;
         this.name_en = name_en;
         this.description_ar = description_ar;
         this.description_en = description_en;
         this.price = price;
+        this.category = category;
         this.is_active = is_active;
         this.created_at = created_at;
         this.updated_at = updated_at;
@@ -45,6 +49,14 @@ public class Product {
     }
 
     public void setId(Long id){this.id=id;}
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
     public String getName_ar() {
         return name_ar;
