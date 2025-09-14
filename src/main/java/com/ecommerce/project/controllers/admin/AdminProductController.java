@@ -5,21 +5,28 @@ import com.ecommerce.project.entities.Category;
 import com.ecommerce.project.entities.Product;
 import com.ecommerce.project.services.CategoryService;
 import com.ecommerce.project.services.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/admin/products")
-public class ProductController {
+public class AdminProductController {
     private ProductService productService;
     private CategoryService categoryService;
 
     @Autowired
-    public ProductController(ProductService productService , CategoryService categoryService){
+    public AdminProductController(ProductService productService , CategoryService categoryService){
         this.productService = productService;
         this.categoryService = categoryService;
     }
@@ -36,9 +43,12 @@ public class ProductController {
     }
 
     @PostMapping
-    public String storeProduct(@ModelAttribute("product")  Product product, Model model){
+    public String storeProduct(@Valid @ModelAttribute("product")  Product product, BindingResult br, Model model){
+        if (br.hasErrors()) {
+            // لازم ترجّع نفس صفحة الفورم وتعيد تعبئة الداتا
+            return "redirect:/admin/products";
+        }
         productService.save(product);
-//        model.addAttribute("product", product);
         return "redirect:/admin/products";
     }
 

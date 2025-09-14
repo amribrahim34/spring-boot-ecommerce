@@ -28,8 +28,8 @@ public class Category {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category parent;
-    @OneToMany(mappedBy = "parent")
-    private List<Category> children ;
+//    @OneToMany(mappedBy = "parent")
+//    private List<Category> children ;
 //    = new ArrayList<>()
 
     public Category(String name_ar, String name_en, String image_url,  Category parent) {
@@ -72,18 +72,18 @@ public class Category {
         this.image_url = image_url;
     }
 
-    public void addChild(Category child) {
-        children.add(child);
-        child.setParent(this);
-    }
-
-    public void removeChild(Category child) {
-        children.remove(child);
-        child.setParent(null);
-    }
+//    public void addChild(Category child) {
+//        children.add(child);
+//        child.setParent(this);
+//    }
+//
+//    public void removeChild(Category child) {
+//        children.remove(child);
+//        child.setParent(null);
+//    }
 
     public Category getParent() { return parent; }
     public void setParent(Category parent) { this.parent = parent; }
-    public List<Category> getChildren() { return children; }
-    public void setChildren(List<Category> children) { this.children = children; }
+//    public List<Category> getChildren() { return children; }
+//    public void setChildren(List<Category> children) { this.children = children; }
 }

@@ -2,6 +2,8 @@ package com.ecommerce.project.entities;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -15,10 +17,16 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
+    @NotBlank
+    @Column(nullable = false)
     public String name_ar;
+    @NotBlank
+    @Column(nullable = false)
     public String name_en;
     public String description_ar;
     public String description_en;
+    @Positive
+    @Column(nullable = false)
     public BigDecimal price;
     public boolean is_active;
     @CreationTimestamp
@@ -120,5 +128,21 @@ public class Product {
 
     public void setUpdated_at(Date updated_at) {
         this.updated_at = updated_at;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name_ar='" + name_ar + '\'' +
+                ", name_en='" + name_en + '\'' +
+                ", description_ar='" + description_ar + '\'' +
+                ", description_en='" + description_en + '\'' +
+                ", price=" + price +
+                ", is_active=" + is_active +
+                ", created_at=" + created_at +
+                ", updated_at=" + updated_at +
+                ", category=" + category +
+                '}';
     }
 }
