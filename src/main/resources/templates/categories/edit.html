@@ -14,7 +14,7 @@
 
             <form th:action="@{/admin/categories/{id}/update(id=${category.id})}" method="post" th:object="${category}" enctype='multipart/form-data'>
                 <input type="hidden" name="_method" value="put"/>
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <input type="hidden" th:name="${_csrf?.parameterName}" th:value="${_csrf?.token}"/>
                 <input type="hidden" th:name="id" th:field="*{id}"/>
 
                 <div class="grid grid-cols-4 gap-4 my-1">

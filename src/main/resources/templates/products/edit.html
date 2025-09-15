@@ -14,7 +14,7 @@
 
             <form th:action="@{/admin/products/{id}/update(id=${product.id})}" method="post" th:object="${product}">
                 <input type="hidden" name="_method" value="put"/>
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <input type="hidden" th:name="${_csrf?.parameterName}" th:value="${_csrf?.token}"/>
                 <input type="hidden" th:name="id" th:field="*{id}"/>
 
                 <div class="grid grid-cols-4 gap-4 my-1">
