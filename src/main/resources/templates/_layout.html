@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="layout (title, content, scripts)">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:fragment="layout (title, content, scripts)">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,7 +27,12 @@
                 </button>
                 <div id="userMenu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-20">
                     <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profile</a>
-                    <a href="#" class="block px-4 py-2 text-red-600 hover:bg-red-100">Logout</a>
+<!--                    name <span sec:authentication="name" ></span>-->
+                    User: <span sec:authentication="principal.username"></span>
+                    <form th:action="@{/logout}" method="post">
+                        <input   class="block px-4 py-2 text-red-600 hover:bg-red-100" type="submit" value="Sign Out"/>
+                    </form>
+<!--                    <a href="#" class="block px-4 py-2 text-red-600 hover:bg-red-100">Logout</a>-->
                 </div>
             </div>
         </div>

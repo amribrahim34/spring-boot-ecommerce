@@ -6,12 +6,15 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import javax.sql.DataSource;
 import java.util.List;
 
 @Configuration
@@ -22,11 +25,19 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .cors(Customizer.withDefaults())
-                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()  // allow CORS preflight
                         .requestMatchers("/api/**").authenticated()
-                        .anyRequest().permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .anyRequest().authenticated()
+                )
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .loginProcessingUrl("/login")
+                        .permitAll()
+                )
+                .logout(logout -> logout.permitAll()
                 )
                 .httpBasic(Customizer.withDefaults()); // Basic Auth
         return http.build();
@@ -45,5 +56,10 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource src = new UrlBasedCorsConfigurationSource();
         src.registerCorsConfiguration("/**", cfg);
         return src;
+    }
+
+    @Bean
+    public UserDetailsManager userDetailsManager(DataSource dataSource){
+        return new JdbcUserDetailsManager(dataSource);
     }
 }
