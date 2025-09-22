@@ -3,12 +3,13 @@ package com.ecommerce.project.entities;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.CredentialsContainer;
 
 import java.util.Date;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements CredentialsContainer {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id ;
     String name;
@@ -28,6 +29,8 @@ public class User {
         this.username = username;
         this.enabled= enabled;
     }
+
+    public User(){}
 
     public String getName() {
         return name;
@@ -71,5 +74,10 @@ public class User {
 
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public void eraseCredentials() {
+        this.password = null;
     }
 }
